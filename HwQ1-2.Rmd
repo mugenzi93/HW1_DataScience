@@ -25,4 +25,4 @@ mean_fac = mean(pull(hw_df, vec_factor))
 ```
 
 A warning message is generated because I am trying to calculate the mean of character variables and that is not possible.
-I am going to have convert some (if not all) my variables to numeric in order to obtain their respective mean. 
+I am going to have to convert some (if not all) my variables to numeric in order to obtain their respective mean. 
