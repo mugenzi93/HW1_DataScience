@@ -15,7 +15,7 @@ library(tidyverse)
 ```
 
 
-```{r Creating Dataframe, include=TRUE}
+```{r Creating he_df, include=TRUE}
 hw_df <- tibble(
   rad_sample = rnorm(8),
   log_vec = rad_sample > 0,
@@ -89,13 +89,23 @@ d * y # where d is the converted logical factor and y the random sample.
 
 ## Creating a Dataframe
 
+Below I am going to create a dataframe comprised of:
 
-```{r}
-library(tidyverse)
+**1.** Two random samples (x and y) from a standard normal distribution. Size is 500.
+
+**2.** A logical vector indicating whether x + y > 1.
+
+**3.** Created a numeric vector by coercing ('as.numeric') the logical vector.
+
+**4.** Created a factor vector by coercing ('as.factor') the logical vector.
+
+```{r creating rad_df, include=TRUE}
 rad_df <- tibble(
-  x <- rnorm(500, sd = 0.5),
-  y <- 1 + 4 * x + rnorm(500),
-  
+  x = rnorm(500),
+  y = rnorm(500),
+  log_vec = x + y > 1,
+  num_vec = as.numeric(log_vec),
+  fac_vec = as.factor(log_vec)
 )
 ```
 

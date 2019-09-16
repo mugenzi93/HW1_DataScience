@@ -24,7 +24,7 @@ mean_samp = mean(pull(hw_df, rad_sample))
 mean_samp
 ```
 
-    ## [1] -0.3114962
+    ## [1] -0.2981771
 
 ``` r
 mean_log = mean(pull(hw_df, log_vec))
@@ -106,7 +106,7 @@ log_as_num <- as.numeric(pull(hw_df, log_vec))
 log_as_num
 ```
 
-    ## [1] 1 1 0 1 0 0 0 0
+    ## [1] 0 1 1 1 0 0 0 0
 
 ``` r
 x <- log_as_num
@@ -114,7 +114,7 @@ y <- rnorm(8)
 x * y # Where x is the converted logical variable and y the random sample.
 ```
 
-    ## [1] -1.6743353 -0.2339612  0.0000000 -1.5792151  0.0000000  0.0000000
+    ## [1]  0.0000000  1.1054149 -0.2686006 -0.4422825  0.0000000  0.0000000
     ## [7]  0.0000000  0.0000000
 
 ``` r
@@ -135,21 +135,32 @@ d <- log_to_num
 d * y # where d is the converted logical factor and y the random sample.
 ```
 
-    ## [1] -3.34867056 -0.46792232  0.39040139 -3.15843025 -0.08985194 -0.96911113
-    ## [7] -1.06165917 -1.17658661
+    ## [1]  0.06118428  2.21082976 -0.53720123 -0.88456491  0.21825623 -0.54204107
+    ## [7] -0.49299983 -0.80737781
 
 # Question 2
 
 ## Creating a Dataframe
 
+Below I am going to create a dataframe comprised of:
+
+**1.** Two random samples (x and y) from a standard normal distribution.
+Size is 500.
+
+**2.** A logical vector indicating whether x + y \> 1.
+
+**3.** Created a numeric vector by coercing (‘as.numeric’) the logical
+vector.
+
+**4.** Created a factor vector by coercing (‘as.factor’) the logical
+vector.
+
 ``` r
-library(tidyverse)
 rad_df <- tibble(
-  x <- rnorm(500, sd = 0.5),
-  y <- 1 + 4 * x + rnorm(500),
-  
+  x = rnorm(500),
+  y = rnorm(500),
+  log_vec = x + y > 1,
+  num_vec = as.numeric(log_vec),
+  fac_vec = as.factor(log_vec)
 )
 ```
-
-    ## Warning in 1 + 4 * x + rnorm(500): longer object length is not a multiple
-    ## of shorter object length
