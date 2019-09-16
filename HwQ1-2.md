@@ -7,37 +7,24 @@ Clement Mugenzi
 
 ## First Part
 
-``` r
-library(tidyverse)
-```
-
-    ## ── Attaching packages ────────────────────────────────────────── tidyverse 1.2.1 ──
-
-    ## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
-    ## ✔ tibble  2.1.3     ✔ dplyr   0.8.3
-    ## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
-    ## ✔ readr   1.3.1     ✔ forcats 0.4.0
-
-    ## ── Conflicts ───────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
+Here, the package Tidyverse was loaded but the code chunk hidden.
 
 ``` r
 hw_df <- tibble(
   rad_sample = rnorm(8),
   log_vec = rad_sample > 0,
-  char_vec = "12345678",
-  vec_factor = factor(c("40209383", "12544478",
-                        "08327492", "40209383",
-                        "12544478", "08327492",
-                        "40209383", "12544478"))
+  char_vec = c("1", "2", "3", "4", "5", "6", "7", "8"),
+  vec_factor = factor(c("male", "female",
+                        "female", "female",
+                        "male", "male",
+                        "male", "female"))
 )
 
 mean_samp = mean(pull(hw_df, rad_sample))
 mean_samp
 ```
 
-    ## [1] -0.5986722
+    ## [1] -0.3114962
 
 ``` r
 mean_log = mean(pull(hw_df, log_vec))
@@ -119,7 +106,7 @@ log_as_num <- as.numeric(pull(hw_df, log_vec))
 log_as_num
 ```
 
-    ## [1] 1 0 0 0 0 0 0 1
+    ## [1] 1 1 0 1 0 0 0 0
 
 ``` r
 x <- log_as_num
@@ -127,8 +114,8 @@ y <- rnorm(8)
 x * y # Where x is the converted logical variable and y the random sample.
 ```
 
-    ## [1] 0.2889532 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
-    ## [8] 0.6185694
+    ## [1] -1.6743353 -0.2339612  0.0000000 -1.5792151  0.0000000  0.0000000
+    ## [7]  0.0000000  0.0000000
 
 ``` r
 # (2)
@@ -148,7 +135,21 @@ d <- log_to_num
 d * y # where d is the converted logical factor and y the random sample.
 ```
 
-    ## [1]  0.5779065 -0.3859152 -0.6682639 -0.3990975  1.5706692 -0.1308182
-    ## [7]  0.3564128  1.2371389
+    ## [1] -3.34867056 -0.46792232  0.39040139 -3.15843025 -0.08985194 -0.96911113
+    ## [7] -1.06165917 -1.17658661
 
 # Question 2
+
+## Creating a Dataframe
+
+``` r
+library(tidyverse)
+rad_df <- tibble(
+  x <- rnorm(500, sd = 0.5),
+  y <- 1 + 4 * x + rnorm(500),
+  
+)
+```
+
+    ## Warning in 1 + 4 * x + rnorm(500): longer object length is not a multiple
+    ## of shorter object length
