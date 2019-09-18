@@ -1,5 +1,5 @@
 ---
-title: "p8105_hw1_cm3928"
+title: "P8105_HW1_cm3928"
 author: "Clement Mugenzi"
 date: "9/14/2019"
 output: github_document
@@ -62,9 +62,11 @@ Yes, this explain why we could only find the mean of the random sample and logic
 
 In this section, I will perform three different tasks in the same code chunk. 
 
-1. First, I will convert the logical vector to numeric, and multiply the random sample by the result
-2. I will convert the logical vector to a factor, and multiply the random sample by the result
-3. Third, I will convert the logical vector to a factor and then convert the result to numeric, and multiply the random sample by the result
+**1.** First, I will convert the logical vector to numeric, and multiply the random sample by the result.
+
+**2.** I will convert the logical vector to a factor, and multiply the random sample by the result.
+
+**3.** Third, I will convert the logical vector to a factor and then convert the result to numeric, and multiply the random sample by the result.
 
 ```{r, include=TRUE}
 # (1)
@@ -72,7 +74,7 @@ log_as_num <- as.numeric(pull(hw_df, log_vec))
 log_as_num
 x <- log_as_num
 y <- rnorm(8)
-x * y # Where x is the converted logical variable and y the random sample.
+x * y # Where x is the converted logical variable and y is the random sample.
 
 # (2)
 log_as_fac <- as.factor(log_as_num)
@@ -82,7 +84,7 @@ t * y
 # (3)
 log_to_num <- as.numeric(log_as_fac)
 d <- log_to_num
-d * y # where d is the converted logical factor and y the random sample.
+d * y # where d is the converted logical factor and y is the random sample.
 ```
 
 # Question 2
@@ -107,6 +109,57 @@ rad_df <- tibble(
   num_vec = as.numeric(log_vec),
   fac_vec = as.factor(log_vec)
 )
+num.cols <- ncol(rad_df)
+num.rows <- nrow(rad_df)
+mean_samp <- mean(x)
+median_samp <- median(x)
+sd_samp <- sd(x)
+logvec_prop <- length(which(pull(rad_df, log_vec))) / 
+  (length(pull(rad_df, log_vec)))
 ```
 
+The number of columns and rows in my dataset are **`r num.cols`** and **`r num.rows`** respectively.
+
+The mean, median and standard deviation of the random variable **x** are given below **`r round(mean_samp, digit = 2)`**, **`r round(median_samp, digit = 2)`**, and **`r round(sd_samp, digit = 2)`** respectively.
+Furthermore, the proportion of cases for which x + y > 1 is **`r round(logvec_prop, digits = 2)`.**
+
+## Building Scatterplots using ggplot2
+
+### First Scatterplot 
+
+```{r, include=FALSE}
+library(ggplot2)
+```
+
+```{r}
+log_ggplot <- ggplot(data = rad_df) + 
+  geom_point(aes(x = x, y = y, color = log_vec))
+log_ggplot
+```
+
+### Second Scatterplot
+
+```{r}
+num_ggplot <- ggplot(data = rad_df) + 
+  geom_point(aes(x = x, y = y, color = num_vec))
+num_ggplot
+```
+
+### Third Scatterplot
+
+```{r}
+fac_ggplot <- ggplot(data = rad_df) + 
+  geom_point(aes(x = x, y = y, color = fac_vec))
+fac_ggplot
+```
+
+**Comment:**
+The factor and logical vectors produces similar scatterplots because they can only have two possible values (TRUE and FALSE). Whereas the numeric vector can possess multiple values between zero and one, which is why a gradient scatterplot was produced.
+
+### Exporting First Scatterplot
+
+```{r}
+ggsave("First_scatterplot.pdf", plot = log_ggplot,
+       path = "HwQ1_2_files/Scatterplot/")
+```
 

@@ -1,4 +1,4 @@
-p8105\_hw1\_cm3928
+P8105\_HW1\_cm3928
 ================
 Clement Mugenzi
 9/14/2019
@@ -24,7 +24,7 @@ mean_samp = mean(pull(hw_df, rad_sample))
 mean_samp
 ```
 
-    ## [1] -0.2981771
+    ## [1] -0.7207525
 
 ``` r
 mean_log = mean(pull(hw_df, log_vec))
@@ -90,15 +90,15 @@ for character and factor variables.
 In this section, I will perform three different tasks in the same code
 chunk.
 
-1.  First, I will convert the logical vector to numeric, and multiply
-    the random sample by the result
-2.  I will convert the logical vector to a factor, and multiply the
-    random sample by the result
-3.  Third, I will convert the logical vector to a factor and then
-    convert the result to numeric, and multiply the random sample by the
-    result
+**1.** First, I will convert the logical vector to numeric, and multiply
+the random sample by the result.
 
-<!-- end list -->
+**2.** I will convert the logical vector to a factor, and multiply the
+random sample by the result.
+
+**3.** Third, I will convert the logical vector to a factor and then
+convert the result to numeric, and multiply the random sample by the
+result.
 
 ``` r
 # (1)
@@ -106,16 +106,16 @@ log_as_num <- as.numeric(pull(hw_df, log_vec))
 log_as_num
 ```
 
-    ## [1] 0 1 1 1 0 0 0 0
+    ## [1] 1 0 1 0 0 0 0 0
 
 ``` r
 x <- log_as_num
 y <- rnorm(8)
-x * y # Where x is the converted logical variable and y the random sample.
+x * y # Where x is the converted logical variable and y is the random sample.
 ```
 
-    ## [1]  0.0000000  1.1054149 -0.2686006 -0.4422825  0.0000000  0.0000000
-    ## [7]  0.0000000  0.0000000
+    ## [1] -0.01144108  0.00000000  0.08034788  0.00000000  0.00000000  0.00000000
+    ## [7]  0.00000000  0.00000000
 
 ``` r
 # (2)
@@ -132,11 +132,11 @@ t * y
 # (3)
 log_to_num <- as.numeric(log_as_fac)
 d <- log_to_num
-d * y # where d is the converted logical factor and y the random sample.
+d * y # where d is the converted logical factor and y is the random sample.
 ```
 
-    ## [1]  0.06118428  2.21082976 -0.53720123 -0.88456491  0.21825623 -0.54204107
-    ## [7] -0.49299983 -0.80737781
+    ## [1] -0.02288215 -0.91885638  0.16069575  0.24795577  0.63812909  0.74767840
+    ## [7] -1.40446691  0.97926064
 
 # Question 2
 
@@ -163,4 +163,64 @@ rad_df <- tibble(
   num_vec = as.numeric(log_vec),
   fac_vec = as.factor(log_vec)
 )
+num.cols <- ncol(rad_df)
+num.rows <- nrow(rad_df)
+mean_samp <- mean(x)
+median_samp <- median(x)
+sd_samp <- sd(x)
+logvec_prop <- length(which(pull(rad_df, log_vec))) / 
+  (length(pull(rad_df, log_vec)))
 ```
+
+The number of columns and rows in my dataset are **5** and **500**
+respectively.
+
+The mean, median and standard deviation of the random variable **x** are
+given below **0.25**, **0**, and **0.46** respectively. Furthermore, the
+proportion of cases for which x + y \> 1 is **0.23.**
+
+## Building Scatterplots using ggplot2
+
+### First Scatterplot
+
+``` r
+log_ggplot <- ggplot(data = rad_df) + 
+  geom_point(aes(x = x, y = y, color = log_vec))
+log_ggplot
+```
+
+![](HwQ1-2_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+### Second Scatterplot
+
+``` r
+num_ggplot <- ggplot(data = rad_df) + 
+  geom_point(aes(x = x, y = y, color = num_vec))
+num_ggplot
+```
+
+![](HwQ1-2_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+### Third Scatterplot
+
+``` r
+fac_ggplot <- ggplot(data = rad_df) + 
+  geom_point(aes(x = x, y = y, color = fac_vec))
+fac_ggplot
+```
+
+![](HwQ1-2_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+**Comment:** The factor and logical vectors produces similar
+scatterplots because they can only have two possible values (TRUE and
+FALSE). Whereas the numeric vector can possess multiple values between
+zero and one, which is why a gradient scatterplot was produced.
+
+### Exporting First Scatterplot
+
+``` r
+ggsave("First_scatterplot.pdf", plot = log_ggplot,
+       path = "HwQ1_2_files/Scatterplot/")
+```
+
+    ## Saving 7 x 5 in image
